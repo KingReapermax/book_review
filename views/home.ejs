@@ -1,0 +1,55 @@
+<%- include ("partials/header.ejs")%>
+
+
+
+<body>
+    <div class="heads">
+        <h1>Book notes</h1>
+        <button class="button" type="button" onclick="window.location.href='/add'">Add a book</button>
+    </div>
+    <div id="intro">
+        <p>
+            Here, you can go through your own reviews of books you've read. Edit them or add new ones anytime you want.
+        </p>
+    </div>
+    <% if(locals.books){%>
+    <div id="books">
+        <% let i = 0; books.forEach((book)=>{ i++;%>
+        <% if(i%3==0)%>
+            <div class="book">
+            
+                
+            
+                <div class="book-head">
+                
+                    
+                    <h2 class="book-title"><a href="https://covers.openlibrary.org/b/isbn/<%=book.isbn%>"><%=book.title.toUpperCase()%></a></h2>
+                    <div class="buttons">
+                        <button class="button" type="button" onclick="window.location.href='/edit/<%=book.id%>'">Edit</button>
+                        <button class="button" type="button" onclick="window.location.href='/delete/<%=book.id%>'">Delete</button>
+                    </div>
+                    <p class="caption">Author: <%=book.author%> Year: <%=book.year%> Rating: <%=book.rating%>/10</p>
+                </div>
+                <div class="book_cover_review">  
+                    <img src="https://covers.openlibrary.org/b/isbn/<%=book.isbn%>-M.jpg" loading="lazy" alt="<%=book.title%>" class="book_ cover">
+                    <p class="review">
+                        <%=book.review%>
+                    </p>
+                </div>
+           
+            </div>
+        <%});%>
+    </div>
+    <%}%>
+
+</body>
+<script>
+    const books = document.querySelectorAll('.book');
+    books.forEach((book)=>{
+        var review = book.querySelector('.review');
+        var text = review.textContent;
+        review.innerHTML = text.replaceAll(/\n/g, '<br>');
+    });
+</script>
+
+<%- include ("partials/footer.ejs")%>
